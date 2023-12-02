@@ -30,7 +30,7 @@ public class Grod : IDictionary<string, string>
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
-            //value ??= "";
+            value ??= "";
             if (UseOverlay)
             {
                 if (!_overlay.TryAdd(key, value))
