@@ -72,6 +72,34 @@ public class Tests
     }
 
     [Test]
+    public void TestAdd()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g.Add("k", "v");
+        Assert.That(g["k"], Is.EqualTo("v"));
+    }
+
+    [Test]
+    public void TestAddTwice()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g.Add("k", "v");
+        g.Add("k", "vvv");
+        Assert.That(g["k"], Is.EqualTo("vvv"));
+    }
+
+    [Test]
+    public void TestAddKeyValuePair()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g.Add(new KeyValuePair<string,string>("k", "v"));
+        Assert.That(g["k"], Is.EqualTo("v"));
+    }
+
+    [Test]
     public void TestNullValue()
     {
         Grod g = [];
@@ -209,6 +237,18 @@ public class Tests
     }
 
     [Test]
+    public void TestContainsKeyValuePair()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        var kv = new KeyValuePair<string, string>("a", "1");
+        g.Add(kv);
+#pragma warning disable NUnit2014 // Use SomeItemsConstraint for better assertion messages in case of failure
+        Assert.That(g.Contains(kv), Is.True);
+#pragma warning restore NUnit2014 // Use SomeItemsConstraint for better assertion messages in case of failure
+    }
+
+    [Test]
     public void TestContainsKeyAfterRemove()
     {
         Grod g = [];
@@ -274,7 +314,7 @@ public class Tests
     }
 
     [Test]
-    public void TestClearOverlay()
+    public void TestClearOnlyOverlay()
     {
         Grod g = [];
         g.UseOverlay = false;
@@ -282,13 +322,36 @@ public class Tests
         g["b"] = "2";
         g["c"] = "3";
         g.UseOverlay = true;
-        g["a"] = "111";
-        g["b"] = "222";
-        g["c"] = "333";
+        g["aaa"] = "111";
+        g["bbb"] = "222";
+        g["ccc"] = "333";
         var answerBeforeClear = g.Count;
-        g.Clear();
-        var answerAfterClear = g.Count;
-        Assert.That(answerBeforeClear == 3 && answerAfterClear == 0, Is.True);
+        g.ClearOverlay();
+        var answerAfterClearOverlay = g.Count;
+        g.UseOverlay = false;
+        var answerAfterClearBase = g.Count;
+        Assert.That(answerBeforeClear == 6 && answerAfterClearOverlay == 3 & answerAfterClearBase == 3, Is.True);
+    }
+
+    [Test]
+    public void TestClearOnlyBase()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g["a"] = "1";
+        g["b"] = "2";
+        g["c"] = "3";
+        g.UseOverlay = true;
+        g["aaa"] = "111";
+        g["bbb"] = "222";
+        g["ccc"] = "333";
+        var answerBeforeClear = g.Count;
+        g.UseOverlay = false;
+        g.ClearBase();
+        var answerAfterClearBase = g.Count;
+        g.UseOverlay = true;
+        var answerAfterClearOverlay = g.Count;
+        Assert.That(answerBeforeClear == 6 && answerAfterClearBase == 0 && answerAfterClearOverlay == 3, Is.True);
     }
 
     [Test]
@@ -309,7 +372,7 @@ public class Tests
         g.UseOverlay = false;
         g["a"] = "1";
         g["b"] = "2";
-        g["c"] = "3";
+        // no "c" in base
         g.UseOverlay = true;
         g["a"] = "111";
         g["b"] = "222";

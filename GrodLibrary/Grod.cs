@@ -82,8 +82,12 @@ public class Grod : IDictionary<string, string>
 
     public void Clear()
     {
-        if (UseOverlay)
-            _overlay.Clear();
+        _overlay.Clear();
+        _base.Clear();
+    }
+
+    public void ClearBase()
+    {
         _base.Clear();
     }
 
