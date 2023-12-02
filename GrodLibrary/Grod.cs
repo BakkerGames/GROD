@@ -48,12 +48,34 @@ public class Grod : IDictionary<string, string>
         UseOverlay ? _base.Keys.Union(_overlay.Keys).ToList() : _base.Keys;
 
     public ICollection<string> KeysOverlay =>
-        _overlay.Keys;
+        UseOverlay ? _overlay.Keys : new List<string>();
+
+    public ICollection<string> KeysPrefix(string prefix)
+    {
+        if (string.IsNullOrEmpty(prefix))
+            return Keys;
+        if (UseOverlay)
+        {
+            return _base.Keys.Union(_overlay.Keys).Where(x => x.StartsWith(prefix)).ToList();
+        }
+        return _base.Keys.Where(x => x.StartsWith(prefix)).ToList();
+    }
+
+    public ICollection<string> KeysOverlayPrefix(string prefix)
+    {
+        if (string.IsNullOrEmpty(prefix))
+            return KeysOverlay;
+        if (UseOverlay)
+        {
+            return _overlay.Keys.Where(x => x.StartsWith(prefix)).ToList();
+        }
+        return new List<string>();
+    }
 
     public ICollection<string> Values =>
-        UseOverlay ? FlattenValues() : _base.Values;
+        UseOverlay ? AllValues() : _base.Values;
 
-    private List<string> FlattenValues()
+    private List<string> AllValues()
     {
         List<string> result = [];
         foreach (string key in Keys)

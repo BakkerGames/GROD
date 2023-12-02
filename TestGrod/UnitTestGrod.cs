@@ -95,7 +95,7 @@ public class Tests
     {
         Grod g = [];
         g.UseOverlay = false;
-        g.Add(new KeyValuePair<string,string>("k", "v"));
+        g.Add(new KeyValuePair<string, string>("k", "v"));
         Assert.That(g["k"], Is.EqualTo("v"));
     }
 
@@ -198,12 +198,67 @@ public class Tests
         g["b"] = "2";
         g["c"] = "3";
         var answer = "";
-        foreach (string s in g.Keys.Where(x => x.StartsWith('b')))
+        foreach (string s in g.KeysPrefix("b"))
         {
             answer += s;
             answer += g[s];
         }
         Assert.That(answer, Is.EqualTo("b2"));
+    }
+
+    [Test]
+    public void TestGetKeysEmptyPrefix()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g["a"] = "1";
+        g["b"] = "2";
+        g["c"] = "3";
+        var answer = "";
+        foreach (string s in g.KeysPrefix(""))
+        {
+            answer += s;
+            answer += g[s];
+        }
+        Assert.That(answer.Contains("a1") && answer.Contains("b2") && answer.Contains("c3"), Is.True);
+    }
+
+    [Test]
+    public void TestGetKeysOverlayPrefix()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g["a"] = "1";
+        g["b"] = "2";
+        g["c"] = "3";
+        g.UseOverlay = true;
+        g["bbb"] = "222";
+        var answer = "";
+        foreach (string s in g.KeysOverlayPrefix("b"))
+        {
+            answer += s;
+            answer += g[s];
+        }
+        Assert.That(answer, Is.EqualTo("bbb222"));
+    }
+
+    [Test]
+    public void TestGetKeysOverlayEmptyPrefix()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g["a"] = "1";
+        g["b"] = "2";
+        g["c"] = "3";
+        g.UseOverlay = true;
+        g["bbb"] = "222";
+        var answer = "";
+        foreach (string s in g.KeysOverlayPrefix(""))
+        {
+            answer += s;
+            answer += g[s];
+        }
+        Assert.That(answer, Is.EqualTo("bbb222"));
     }
 
     [Test]
@@ -352,6 +407,32 @@ public class Tests
         g.UseOverlay = true;
         var answerAfterClearOverlay = g.Count;
         Assert.That(answerBeforeClear == 6 && answerAfterClearBase == 0 && answerAfterClearOverlay == 3, Is.True);
+    }
+
+    [Test]
+    public void TestKeys()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g["a"] = "1";
+        g["b"] = "2";
+        g["c"] = "3";
+        var keys = g.Keys;
+        Assert.That(keys.Contains("a") && keys.Contains("b") && keys.Contains("c"), Is.True);
+    }
+
+    [Test]
+    public void TestKeysOverlay()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g["a"] = "1";
+        g["b"] = "2";
+        g["c"] = "3";
+        g.UseOverlay = true;
+        g["bbb"] = "222";
+        var keys = g.KeysOverlay;
+        Assert.That(!keys.Contains("a") && !keys.Contains("b") && !keys.Contains("c") && keys.Contains("bbb"), Is.True);
     }
 
     [Test]
