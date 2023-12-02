@@ -72,6 +72,17 @@ public class Tests
     }
 
     [Test]
+    public void TestNullValue()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+        g["k"] = null;
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        Assert.That(g["k"], Is.EqualTo(""));
+    }
+
+    [Test]
     public void TestCaseSensitiveKeys()
     {
         Grod g = [];

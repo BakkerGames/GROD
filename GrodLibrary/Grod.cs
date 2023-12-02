@@ -20,9 +20,9 @@ public class Grod : IDictionary<string, string>
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
             if (UseOverlay && _overlay.TryGetValue(key, out string? value1))
-                return value1;
+                return value1 ?? "";
             else if (_base.TryGetValue(key, out string? value2))
-                return value2;
+                return value2 ?? "";
             else
                 return "";
         }
@@ -30,6 +30,7 @@ public class Grod : IDictionary<string, string>
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
+            //value ??= "";
             if (UseOverlay)
             {
                 if (!_overlay.TryAdd(key, value))
