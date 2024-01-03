@@ -11,8 +11,15 @@ public class Grod : IDictionary<string, string>
     private readonly Dictionary<string, string> _base = [];
     private readonly Dictionary<string, string> _overlay = [];
 
+    /// <summary>
+    /// Enable or disable the overlay collection.
+    /// </summary>
     public bool UseOverlay { get; set; } = false;
 
+    /// <summary>
+    /// Gets or sets the element with the specified key. Returns "" or adds the item if key is not found. Key cannot be null or only whitespace. Null values are changed to "".
+    /// </summary>
+    /// <exception cref="ArgumentNullException"></exception>
     public string this[string key]
     {
         get
@@ -53,14 +60,9 @@ public class Grod : IDictionary<string, string>
     public ICollection<string> Values =>
         UseOverlay ? AllValues() : _base.Values;
 
-    private List<string> AllValues()
-    {
-        List<string> result = [];
-        foreach (string key in Keys)
-            result.Add(this[key]);
-        return result;
-    }
-
+    /// <summary>
+    /// Gets the number of items in the base or base+overlay collection.
+    /// </summary>
     public int Count =>
         (UseOverlay ? _base.Keys.Union(_overlay.Keys) : _base.Keys).Count();
 
@@ -80,17 +82,26 @@ public class Grod : IDictionary<string, string>
         this[item.Key] = item.Value;
     }
 
+    /// <summary>
+    /// Removes all items from both the base and overlay collections.
+    /// </summary>
     public void Clear()
     {
         _overlay.Clear();
         _base.Clear();
     }
 
+    /// <summary>
+    /// Removes all items from the base collection.
+    /// </summary>
     public void ClearBase()
     {
         _base.Clear();
     }
 
+    /// <summary>
+    /// Removes all items from the overlay collection.
+    /// </summary>
     public void ClearOverlay()
     {
         _overlay.Clear();
@@ -100,14 +111,18 @@ public class Grod : IDictionary<string, string>
     {
         if (string.IsNullOrWhiteSpace(item.Key))
             throw new ArgumentNullException(nameof(item));
-        return _base.Contains(item) || (UseOverlay && _overlay.Contains(item));
+        if (UseOverlay && _overlay.TryGetValue(item.Key, out string? value1))
+            return (value1 ?? "") == (item.Value ?? "");
+        if (_base.TryGetValue(item.Key, out string? value2))
+            return (value2 ?? "") == (item.Value ?? "");
+        return false;
     }
 
     public bool ContainsKey(string key)
     {
         if (string.IsNullOrWhiteSpace(key))
             throw new ArgumentNullException(nameof(key));
-        return _base.ContainsKey(key) || (UseOverlay && _overlay.ContainsKey(key));
+        return (UseOverlay && _overlay.ContainsKey(key)) || _base.ContainsKey(key);
     }
 
     public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
@@ -162,4 +177,16 @@ public class Grod : IDictionary<string, string>
     {
         return (IEnumerator)(UseOverlay ? _base.Union(_overlay) : _base);
     }
+
+    #region Private
+
+    private List<string> AllValues()
+    {
+        List<string> result = [];
+        foreach (string key in Keys)
+            result.Add(this[key]);
+        return result;
+    }
+
+    #endregion
 }
