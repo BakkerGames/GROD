@@ -54,6 +54,9 @@ public class Grod : IDictionary<string, string>
     public ICollection<string> Keys =>
         UseOverlay ? _base.Keys.Union(_overlay.Keys).ToList() : _base.Keys;
 
+    /// <summary>
+    /// Gets a list containing the keys from the overlay collection.
+    /// </summary>
     public ICollection<string> KeysOverlay =>
         UseOverlay ? _overlay.Keys : new List<string>();
 
