@@ -5,19 +5,22 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Authors>Scott Bakker</Authors>
+    <Authors>Scott Bakker,chimera343</Authors>
     <Company>BakkerGames</Company>
-    <Copyright>Copyright 2023 Scott Bakker</Copyright>
-    <Description>GROD - Game Resource Overlay Dictionary - Handle changes to game resources during play</Description>
+    <Copyright>Copyright 2023-2024 Scott Bakker</Copyright>
+    <Description>GROD - Game Resource Overlay Dictionary
+An in-memory key-value dictionary for handling starting data and subsequent changes. Designed for games needing save/restore ability.</Description>
     <PackageLicenseExpression>MIT-0</PackageLicenseExpression>
     <PackageOutputPath>..\NuGet\</PackageOutputPath>
     <PackageProjectUrl>https://github.com/BakkerGames/GrodLibrary</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/BakkerGames/GrodLibrary</RepositoryUrl>
     <Title>GROD - Game Resource Overlay Dictionary</Title>
-    <Version>1.0.5</Version>
-    <AssemblyVersion>1.0.5</AssemblyVersion>
-    <FileVersion>1.0.5</FileVersion>
+    <Version>1.0.6</Version>
+    <AssemblyVersion>1.0.6</AssemblyVersion>
+    <FileVersion>1.0.6</FileVersion>
+    <PackageTags>grod;key value;data;overlay;game;game resources;gamedev;game development;interactive fiction;IF;text adventure</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
