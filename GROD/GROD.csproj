@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Authors>Scott Bakker,chimera343</Authors>
+    <Authors>Scott Bakker</Authors>
     <Company>BakkerGames</Company>
     <Copyright>Copyright 2023-2024 Scott Bakker</Copyright>
     <Description>GROD - Game Resource Overlay Dictionary
