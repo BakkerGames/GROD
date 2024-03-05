@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 
-namespace GrodLibrary;
+namespace GROD;
 
 /// <summary>
 /// GROD - Game Resource Overlay Dictionary
@@ -64,13 +64,16 @@ public class Grod : IDictionary<string, string>
         UseOverlay ? AllValues() : _base.Values;
 
     /// <summary>
-    /// Gets the number of items in the base or base+overlay collection.
+    /// Gets the number of items in the base or base plus overlay collection, depending on UseOverlay. Counts duplicate keys only once.
     /// </summary>
     public int Count =>
         (UseOverlay ? _base.Keys.Union(_overlay.Keys) : _base.Keys).Count();
 
     public bool IsReadOnly => false;
 
+    /// <summary>
+    /// Adds or updates the element with the specified key and value. Key cannot be null or only whitespace. Null values are changed to "". Does not throw an error if it already exists.
+    /// </summary>
     public void Add(string key, string value)
     {
         if (string.IsNullOrWhiteSpace(key))
@@ -78,6 +81,9 @@ public class Grod : IDictionary<string, string>
         this[key] = value;
     }
 
+    /// <summary>
+    /// Adds or updates the element with the specified KeyValuePair. Key cannot be null or only whitespace. Null values are changed to "". Does not throw an error if it already exists.
+    /// </summary>
     public void Add(KeyValuePair<string, string> item)
     {
         if (string.IsNullOrWhiteSpace(item.Key))

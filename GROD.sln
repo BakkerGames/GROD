@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrodLibrary", "GrodLibrary\GrodLibrary.csproj", "{78914FCC-F67A-4A01-8C14-7B9DFAE5C3A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GROD", "GROD\GROD.csproj", "{78914FCC-F67A-4A01-8C14-7B9DFAE5C3A0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGrod", "TestGrod\TestGrod.csproj", "{A0F6CC11-9591-4EEE-90D9-81924AABB332}"
 EndProject

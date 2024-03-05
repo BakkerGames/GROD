@@ -1,4 +1,4 @@
-using GrodLibrary;
+using GROD;
 
 namespace TestGrod;
 
