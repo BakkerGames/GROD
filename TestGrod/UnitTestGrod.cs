@@ -388,4 +388,25 @@ public class Tests
         g["c"] = "333";
         Assert.That(g.Keys, Has.Count.EqualTo(g.Values.Count));
     }
+
+    [Test]
+    public void Test_Readme()
+    {
+        var helpText = Grod.ReadMe();
+        Assert.That(helpText, !Is.EqualTo(null));
+    }
+
+    [Test]
+    public void Test_License()
+    {
+        var helpText = Grod.License();
+        Assert.That(helpText, !Is.EqualTo(null));
+    }
+
+    [Test]
+    public void Test_VersionHistory()
+    {
+        var helpText = Grod.VersionHistory();
+        Assert.That(helpText, !Is.EqualTo(null));
+    }
 }

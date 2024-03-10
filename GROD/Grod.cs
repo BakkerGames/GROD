@@ -6,7 +6,7 @@ namespace GROD;
 /// <summary>
 /// GROD - Game Resource Overlay Dictionary
 /// </summary>
-public class Grod : IDictionary<string, string>
+public partial class Grod : IDictionary<string, string>
 {
     private readonly Dictionary<string, string> _base = [];
     private readonly Dictionary<string, string> _overlay = [];
