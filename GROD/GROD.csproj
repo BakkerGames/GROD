@@ -20,7 +20,7 @@ An in-memory key-value dictionary for handling beginning data and subsequent cha
     <AssemblyVersion>1.1.1</AssemblyVersion>
     <FileVersion>1.1.1</FileVersion>
     <PackageTags>grod;data;overlay;game;resources;gamedev;development</PackageTags>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>1.1.1 - Added Added ReadMe(), License(), and VersionHistory() for retriving that information.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
