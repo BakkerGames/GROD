@@ -16,11 +16,12 @@ An in-memory key-value dictionary for handling beginning data and subsequent cha
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/BakkerGames/GROD</RepositoryUrl>
     <Title>GROD - Game Resource Overlay Dictionary</Title>
-    <Version>1.1.1</Version>
-    <AssemblyVersion>1.1.1</AssemblyVersion>
-    <FileVersion>1.1.1</FileVersion>
+    <Version>1.1.2</Version>
+    <AssemblyVersion>1.1.2</AssemblyVersion>
+    <FileVersion>1.1.2</FileVersion>
     <PackageTags>grod;data;overlay;game;resources;gamedev;development</PackageTags>
-    <PackageReleaseNotes>1.1.1 - Added Added ReadMe(), License(), and VersionHistory() for retriving that information.</PackageReleaseNotes>
+    <PackageReleaseNotes>1.1.2 - Null check on resource stream</PackageReleaseNotes>
+    <AssemblyName>grod</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
