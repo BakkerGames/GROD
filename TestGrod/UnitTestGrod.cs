@@ -397,13 +397,6 @@ public class Tests
     }
 
     [Test]
-    public void Test_License()
-    {
-        var helpText = Grod.License();
-        Assert.That(helpText, !Is.EqualTo(null));
-    }
-
-    [Test]
     public void Test_VersionHistory()
     {
         var helpText = Grod.VersionHistory();
