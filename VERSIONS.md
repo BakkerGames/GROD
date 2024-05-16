@@ -16,7 +16,7 @@
 
 1.1.0 - Renamed to GROD
 
-1.1.1 - Added Added ReadMe(), License(), and VersionHistory() for retriving that information.
+1.1.1 - Added routines for getting project information
 
 1.1.2 - Null check on resource stream
 

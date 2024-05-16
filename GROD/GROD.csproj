@@ -10,7 +10,7 @@
     <Copyright>Copyright 2023-2024 Scott Bakker</Copyright>
     <Description>GROD - Game Resource Overlay Dictionary
 An in-memory key-value dictionary for handling beginning data and subsequent changes. Designed for games needing save/restore ability.</Description>
-    <PackageLicenseExpression>MIT-0</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageOutputPath>..\NuGet\</PackageOutputPath>
     <PackageProjectUrl>https://github.com/BakkerGames/GROD</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
