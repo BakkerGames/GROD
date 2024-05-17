@@ -405,18 +405,4 @@ public class Tests
         var answer3 = g["key"];
         Assert.That(answer3, Is.EqualTo("abc"));
     }
-
-    [Test]
-    public void Test_Readme()
-    {
-        var helpText = Grod.ReadMe();
-        Assert.That(helpText, !Is.EqualTo(null));
-    }
-
-    [Test]
-    public void Test_VersionHistory()
-    {
-        var helpText = Grod.VersionHistory();
-        Assert.That(helpText, !Is.EqualTo(null));
-    }
 }
