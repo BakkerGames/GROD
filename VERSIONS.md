@@ -21,3 +21,5 @@
 1.1.2 - Null check on resource stream
 
 1.1.3 - Add MergeOverlay()
+
+1.1.4 - Added Revert()

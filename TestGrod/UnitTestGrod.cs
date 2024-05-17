@@ -390,6 +390,23 @@ public class Tests
     }
 
     [Test]
+    public void TestRevert()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g["key"] = "abc";
+        g.UseOverlay = true;
+        var answer1 = g["key"];
+        Assert.That(answer1, Is.EqualTo("abc"));
+        g["key"] = "123";
+        var answer2 = g["key"];
+        Assert.That(answer2, Is.EqualTo("123"));
+        g.Revert("key");
+        var answer3 = g["key"];
+        Assert.That(answer3, Is.EqualTo("abc"));
+    }
+
+    [Test]
     public void Test_Readme()
     {
         var helpText = Grod.ReadMe();
