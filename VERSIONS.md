@@ -23,3 +23,5 @@
 1.1.3 - Add MergeOverlay()
 
 1.1.4 - Added Revert()
+
+2.0.0 - Switch to git submodule layout

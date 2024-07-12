@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GROD\GROD.csproj" />
+    <ProjectReference Include="..\GROD.csproj" />
   </ItemGroup>
 
 </Project>
