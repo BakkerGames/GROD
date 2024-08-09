@@ -16,11 +16,9 @@ An in-memory key-value dictionary for handling beginning data and subsequent cha
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/BakkerGames/GROD</RepositoryUrl>
     <Title>GROD - Game Resource Overlay Dictionary</Title>
-    <Version>2.0.0</Version>
-    <AssemblyVersion>2.0.0</AssemblyVersion>
-    <FileVersion>2.0.0</FileVersion>
-    <PackageTags>grod;data;overlay;game;resources;gamedev;development</PackageTags>
-    <PackageReleaseNotes>2.0.0 - Switch to split project layout</PackageReleaseNotes>
+    <Version>2024.8.8</Version>
+    <AssemblyVersion>2024.8.8</AssemblyVersion>
+    <FileVersion>2024.8.8</FileVersion>
     <AssemblyName>grod</AssemblyName>
   </PropertyGroup>
 

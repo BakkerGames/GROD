@@ -10,6 +10,6 @@ When saving the game progress, only the overlay values need to be stored into a 
 
 Set UseOverlay = false to load the base values, and then set UseOverlay = true to play the game.
 
-Keys are strings and cannot be null, "", or only whitespace, but all others are valid. Keys are case-sensitive. Use the Keys() function to get a list of all keys or KeysOverlay() for overlay keys only, such as when saving.
+Keys are strings and cannot be null, "", or only whitespace, but all others are valid. Keys are case-insensitive and trimmed. Use the Keys() function to get a list of all keys or KeysOverlay() for overlay keys only, such as when saving.
 
 Values are strings. If value is null it is changed to "" but no other modifications are performed. Other data types can be converted to and from string values by the calling program.

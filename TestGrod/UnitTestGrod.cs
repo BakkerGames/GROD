@@ -104,19 +104,35 @@ public class Tests
     {
         Grod g = [];
         g.UseOverlay = false;
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         g["k"] = null;
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         Assert.That(g["k"], Is.EqualTo(""));
     }
 
     [Test]
-    public void TestCaseSensitiveKeys()
+    public void TestCaseInsensitiveKeys()
     {
         Grod g = [];
         g.UseOverlay = false;
         g["k"] = "v";
-        Assert.That(g["K"], Is.EqualTo(""));
+        Assert.That(g["K"], Is.EqualTo("v"));
+    }
+
+    [Test]
+    public void TestTrimmedKeysSet()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g["    k   "] = "v";
+        Assert.That(g["k"], Is.EqualTo("v"));
+    }
+
+    [Test]
+    public void TestTrimmedKeysGet()
+    {
+        Grod g = [];
+        g.UseOverlay = false;
+        g["k"] = "v";
+        Assert.That(g["   k   "], Is.EqualTo("v"));
     }
 
     [Test]

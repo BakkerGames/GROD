@@ -6,10 +6,10 @@ namespace GROD;
 /// <summary>
 /// GROD - Game Resource Overlay Dictionary
 /// </summary>
-public partial class Grod : IDictionary<string, string>
+public partial class Grod : IDictionary<string, string?>
 {
-    private readonly Dictionary<string, string> _base = [];
-    private readonly Dictionary<string, string> _overlay = [];
+    private readonly Dictionary<string, string?> _base = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, string?> _overlay = new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
     /// Enable or disable the overlay collection.
@@ -17,15 +17,15 @@ public partial class Grod : IDictionary<string, string>
     public bool UseOverlay { get; set; } = false;
 
     /// <summary>
-    /// Gets or sets the element with the specified key. Returns "" or adds the item if key is not found. Key cannot be null or only whitespace. Null values are changed to "".
+    /// Gets or sets the element with the specified key.
     /// </summary>
-    /// <exception cref="ArgumentNullException"></exception>
-    public string this[string key]
+    public string? this[string key]
     {
         get
         {
-            if (string.IsNullOrWhiteSpace(key))
+            if (string.IsNullOrWhiteSpace(key) || key.Trim() == "")
                 throw new ArgumentNullException(nameof(key));
+            key = key.Trim();
             if (UseOverlay && _overlay.TryGetValue(key, out string? value1))
                 return value1 ?? "";
             else if (_base.TryGetValue(key, out string? value2))
@@ -35,18 +35,18 @@ public partial class Grod : IDictionary<string, string>
         }
         set
         {
-            if (string.IsNullOrWhiteSpace(key))
+            if (string.IsNullOrWhiteSpace(key) || key.Trim() == "")
                 throw new ArgumentNullException(nameof(key));
-            value ??= "";
+            key = key.Trim();
             if (UseOverlay)
             {
                 if (!_overlay.TryAdd(key, value))
-                    _overlay[key] = value;
+                    _overlay[key] = value ?? "";
             }
             else
             {
                 if (!_base.TryAdd(key, value))
-                    _base[key] = value;
+                    _base[key] = value ?? "";
             }
         }
     }
@@ -60,7 +60,7 @@ public partial class Grod : IDictionary<string, string>
     public ICollection<string> KeysOverlay =>
         UseOverlay ? _overlay.Keys : new List<string>();
 
-    public ICollection<string> Values =>
+    public ICollection<string?> Values =>
         UseOverlay ? AllValues() : _base.Values;
 
     /// <summary>
@@ -74,21 +74,24 @@ public partial class Grod : IDictionary<string, string>
     /// <summary>
     /// Adds or updates the element with the specified key and value. Key cannot be null or only whitespace. Null values are changed to "". Does not throw an error if it already exists.
     /// </summary>
-    public void Add(string key, string value)
+    public void Add(string key, string? value)
     {
-        if (string.IsNullOrWhiteSpace(key))
+        if (string.IsNullOrWhiteSpace(key) || key.Trim() == "")
             throw new ArgumentNullException(nameof(key));
+        key = key.Trim();
         this[key] = value;
     }
 
     /// <summary>
     /// Adds or updates the element with the specified KeyValuePair. Key cannot be null or only whitespace. Null values are changed to "". Does not throw an error if it already exists.
     /// </summary>
-    public void Add(KeyValuePair<string, string> item)
+    public void Add(KeyValuePair<string, string?> item)
     {
-        if (string.IsNullOrWhiteSpace(item.Key))
+        var key = item.Key;
+        if (string.IsNullOrWhiteSpace(key) || key.Trim() == "")
             throw new ArgumentNullException(nameof(item));
-        this[item.Key] = item.Value;
+        key = key.Trim();
+        this[key] = item.Value;
     }
 
     /// <summary>
@@ -116,40 +119,43 @@ public partial class Grod : IDictionary<string, string>
         _overlay.Clear();
     }
 
-    public bool Contains(KeyValuePair<string, string> item)
+    public bool Contains(KeyValuePair<string, string?> item)
     {
-        if (string.IsNullOrWhiteSpace(item.Key))
+        var key = item.Key;
+        if (string.IsNullOrWhiteSpace(key) || key.Trim() == "")
             throw new ArgumentNullException(nameof(item));
-        if (UseOverlay && _overlay.TryGetValue(item.Key, out string? value1))
-            return (value1 ?? "") == (item.Value ?? "");
-        if (_base.TryGetValue(item.Key, out string? value2))
-            return (value2 ?? "") == (item.Value ?? "");
+        key = key.Trim();
+        if (UseOverlay && _overlay.TryGetValue(key, out string? value1))
+            return value1 == item.Value;
+        if (_base.TryGetValue(key, out string? value2))
+            return value2 == item.Value;
         return false;
     }
 
     public bool ContainsKey(string key)
     {
-        if (string.IsNullOrWhiteSpace(key))
+        if (string.IsNullOrWhiteSpace(key) || key.Trim() == "")
             throw new ArgumentNullException(nameof(key));
+        key = key.Trim();
         return (UseOverlay && _overlay.ContainsKey(key)) || _base.ContainsKey(key);
     }
 
-    public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
+    public void CopyTo(KeyValuePair<string, string?>[] array, int arrayIndex)
     {
         var i = 0;
         foreach (string key in Keys)
         {
-            array[i + arrayIndex] = new KeyValuePair<string, string>(key, this[key]);
+            array[i + arrayIndex] = new KeyValuePair<string, string?>(key, this[key]);
             i++;
         }
     }
 
-    public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
+    public IEnumerator<KeyValuePair<string, string?>> GetEnumerator()
     {
-        List<KeyValuePair<string, string>> result = [];
+        List<KeyValuePair<string, string?>> result = [];
         foreach (string key in Keys)
-            result.Add(new KeyValuePair<string, string>(key, this[key]));
-        return (IEnumerator<KeyValuePair<string, string>>)result;
+            result.Add(new KeyValuePair<string, string?>(key, this[key]));
+        return (IEnumerator<KeyValuePair<string, string?>>)result;
     }
 
     /// <summary>
@@ -170,21 +176,24 @@ public partial class Grod : IDictionary<string, string>
 
     public bool Remove(string key)
     {
-        if (string.IsNullOrWhiteSpace(key))
+        if (string.IsNullOrWhiteSpace(key) || key.Trim() == "")
             throw new ArgumentNullException(nameof(key));
+        key = key.Trim();
         bool result = _base.Remove(key);
         if (UseOverlay)
             result |= _overlay.Remove(key);
         return result;
     }
 
-    public bool Remove(KeyValuePair<string, string> item)
+    public bool Remove(KeyValuePair<string, string?> item)
     {
-        if (string.IsNullOrWhiteSpace(item.Key))
+        var key = item.Key;
+        if (string.IsNullOrWhiteSpace(key) || key.Trim() == "")
             throw new ArgumentNullException(nameof(item));
-        bool result = _base.Contains(item) && _base.Remove(item.Key);
+        key = key.Trim();
+        bool result = _base.ContainsKey(key) && _base.Remove(key);
         if (UseOverlay)
-            result |= _overlay.Contains(item) && _overlay.Remove(item.Key);
+            result |= _overlay.ContainsKey(key) && _overlay.Remove(key);
         return result;
     }
 
@@ -193,16 +202,18 @@ public partial class Grod : IDictionary<string, string>
     /// </summary>
     public void Revert(string key)
     {
-        if (string.IsNullOrWhiteSpace(key))
+        if (string.IsNullOrWhiteSpace(key) || key.Trim() == "")
             throw new ArgumentNullException(nameof(key));
+        key = key.Trim();
         if (UseOverlay)
             _overlay.Remove(key);
     }
 
     public bool TryGetValue(string key, [MaybeNullWhen(false)] out string value)
     {
-        if (string.IsNullOrWhiteSpace(key))
+        if (string.IsNullOrWhiteSpace(key) || key.Trim() == "")
             throw new ArgumentNullException(nameof(key));
+        key = key.Trim();
         if (UseOverlay && _overlay.ContainsKey(key))
             return _overlay.TryGetValue(key, out value);
         else
@@ -216,9 +227,9 @@ public partial class Grod : IDictionary<string, string>
 
     #region Private
 
-    private List<string> AllValues()
+    private List<string?> AllValues()
     {
-        List<string> result = [];
+        List<string?> result = [];
         foreach (string key in Keys)
             result.Add(this[key]);
         return result;
